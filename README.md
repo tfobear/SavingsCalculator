@@ -1,2 +1,2 @@
 # SavingsCalculator
-A really COOL savings calculator app 👍
+A very COOL savings calculator app 👍
