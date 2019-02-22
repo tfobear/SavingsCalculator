@@ -1,0 +1,11 @@
+c:\repos\SavingsCalculator\SavingsCalculator\bin\Debug\netcoreapp2.2\SavingsCalculator.Api.deps.json
+c:\repos\SavingsCalculator\SavingsCalculator\bin\Debug\netcoreapp2.2\SavingsCalculator.Api.runtimeconfig.json
+c:\repos\SavingsCalculator\SavingsCalculator\bin\Debug\netcoreapp2.2\SavingsCalculator.Api.runtimeconfig.dev.json
+c:\repos\SavingsCalculator\SavingsCalculator\bin\Debug\netcoreapp2.2\SavingsCalculator.Api.dll
+c:\repos\SavingsCalculator\SavingsCalculator\obj\Debug\netcoreapp2.2\SavingsCalculator.Api.csprojAssemblyReference.cache
+c:\repos\SavingsCalculator\SavingsCalculator\obj\Debug\netcoreapp2.2\SavingsCalculator.Api.csproj.CoreCompileInputs.cache
+c:\repos\SavingsCalculator\SavingsCalculator\obj\Debug\netcoreapp2.2\SavingsCalculator.Api.RazorAssemblyInfo.cache
+c:\repos\SavingsCalculator\SavingsCalculator\obj\Debug\netcoreapp2.2\SavingsCalculator.Api.RazorAssemblyInfo.cs
+c:\repos\SavingsCalculator\SavingsCalculator\obj\Debug\netcoreapp2.2\SavingsCalculator.Api.AssemblyInfoInputs.cache
+c:\repos\SavingsCalculator\SavingsCalculator\obj\Debug\netcoreapp2.2\SavingsCalculator.Api.AssemblyInfo.cs
+c:\repos\SavingsCalculator\SavingsCalculator\obj\Debug\netcoreapp2.2\SavingsCalculator.Api.RazorTargetAssemblyInfo.cache
