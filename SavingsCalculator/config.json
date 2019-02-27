@@ -1,0 +1,19 @@
+{
+  "ConnectionStrings": {
+    "BovsiLinkedinConnectionString": "Data Source=(local);Initial Catalog=SavingsCalculator;Integrated Security=True"
+  },
+  "Tokens": {
+    "Key": "mys3cre7",
+    "Issuer": "SavingsCalculator",
+    "Audience": "SvaingsCalculator"
+  },
+  "Seed": {
+    "DefaultPassword": "savingsp@ss"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
+}

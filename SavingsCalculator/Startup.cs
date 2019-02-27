@@ -1,31 +1,98 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using SavingsCalculator.Api.Data;
+using SavingsCalculator.Data;
+using SavingsCalculator.Data.Entities;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace SavingsCalculator.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IConfiguration config;
+        private readonly IHostingEnvironment environment;
+
+        public Startup(IConfiguration config, IHostingEnvironment environment)
         {
-            Configuration = configuration;
+            this.config = config;
+            this.environment = environment;
         }
 
-        public IConfiguration Configuration { get; }
-
         // This method gets called by the runtime. Use this method to add services to the container.
+        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSwaggerGen(c =>
+            {
+                c.IncludeXmlComments(
+                    Path.Combine(
+                        AppContext.BaseDirectory,
+                        "SavingsCalculator.xml")
+                );
+                c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                {
+                    In = "header",
+                    Description = "Please enter JWT with Bearer into field",
+                    Name = "Authorization",
+                    Type = "apiKey"
+                });
+                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>> {
+                    { "Bearer", Enumerable.Empty<string>() },
+                });
+                c.SwaggerDoc("v1", new Info
+                {
+                    Version = "v1",
+                    Title = "Savings Calculator",
+                    Description = "A really COOL savings app",
+                    TermsOfService = "None",
+                    Contact = new Contact()
+                    {
+                        Name = "Tom Fobear",
+                        Email = "tfobear@gmail.com",
+                        Url = "https://github.com/tfobear/"
+                    }
+                });
+            });
+
+            services.AddDbContext<SavingsContext>(cfg =>
+            {
+                cfg.UseSqlServer(config.GetConnectionString("BovsiLinkedinConnectionString"));
+            });
+
+            services.AddIdentity<AppUser, AppRole>(cfg =>
+            {
+                cfg.User.RequireUniqueEmail = true;
+                cfg.Password.RequireDigit = false;
+                cfg.Password.RequireUppercase = false;
+                cfg.ClaimsIdentity.UserIdClaimType = JwtRegisteredClaimNames.Sub;
+            })
+            .AddEntityFrameworkStores<SavingsContext>();
+
+            services.AddTransient<AppSeeder>();
+
+            services.AddAuthentication()
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidIssuer = config["Tokens:Issuer"],
+                        ValidAudience = config["Tokens:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Tokens:Key"]))
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,12 +104,17 @@ namespace SavingsCalculator.Api
             }
             else
             {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
             app.UseHttpsRedirection();
             app.UseMvc();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Savings Calculator API V1");
+            });
+
         }
     }
 }
