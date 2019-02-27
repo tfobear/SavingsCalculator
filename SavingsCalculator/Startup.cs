@@ -69,7 +69,7 @@ namespace SavingsCalculator.Api
 
             services.AddDbContext<SavingsContext>(cfg =>
             {
-                cfg.UseMySql(config.GetConnectionString("BovsiLinkedinConnectionString"));
+                cfg.UseSqlServer(config.GetConnectionString("BovsiLinkedinConnectionString"));
             });
 
             services.AddIdentity<AppUser, AppRole>(cfg =>
