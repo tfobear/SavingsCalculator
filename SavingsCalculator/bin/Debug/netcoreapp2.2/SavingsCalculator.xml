@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SavingsCalculator.Api</name>
+    </assembly>
+    <members>
+        <member name="T:SavingsCalculator.Controllers.AccountsController">
+            <summary>
+            Api for User Accounts
+            </summary>
+        </member>
+    </members>
+</doc>
