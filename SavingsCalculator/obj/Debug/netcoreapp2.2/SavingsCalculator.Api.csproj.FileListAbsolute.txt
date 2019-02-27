@@ -9,3 +9,7 @@ c:\repos\SavingsCalculator\SavingsCalculator\obj\Debug\netcoreapp2.2\SavingsCalc
 c:\repos\SavingsCalculator\SavingsCalculator\obj\Debug\netcoreapp2.2\SavingsCalculator.Api.AssemblyInfoInputs.cache
 c:\repos\SavingsCalculator\SavingsCalculator\obj\Debug\netcoreapp2.2\SavingsCalculator.Api.AssemblyInfo.cs
 c:\repos\SavingsCalculator\SavingsCalculator\obj\Debug\netcoreapp2.2\SavingsCalculator.Api.RazorTargetAssemblyInfo.cache
+c:\repos\SavingsCalculator\SavingsCalculator\bin\Debug\netcoreapp2.2\SavingsCalculator.Api.pdb
+c:\repos\SavingsCalculator\SavingsCalculator\obj\Debug\netcoreapp2.2\SavingsCalculator.Api.dll
+c:\repos\SavingsCalculator\SavingsCalculator\obj\Debug\netcoreapp2.2\SavingsCalculator.Api.pdb
+c:\repos\SavingsCalculator\SavingsCalculator\bin\Debug\netcoreapp2.2\SavingsCalculator.xml

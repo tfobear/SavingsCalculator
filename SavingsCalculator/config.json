@@ -1,0 +1,19 @@
+{
+  "ConnectionStrings": {
+    "BovsiLinkedinConnectionString": "Server=localhost;Database=savings_calculator;Uid=savings_local;Pwd=savings_local;"
+  },
+  "Tokens": {
+    "Key": "mys3cre7",
+    "Issuer": "SavingsCalculator",
+    "Audience": "SvaingsCalculator"
+  },
+  "Seed": {
+    "DefaultPassword": "savingsp@ss"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
+}
