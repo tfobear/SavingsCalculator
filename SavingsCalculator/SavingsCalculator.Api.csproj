@@ -5,9 +5,13 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>c:\repos\SavingsCalculator\SavingsCalculator\SavingsCalculator.xml</DocumentationFile>
+    <DocumentationFile>SavingsCalculator.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>SavingsCalculator.xml</DocumentationFile>
+  </PropertyGroup>
+  
   <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="Data\Entities\" />
