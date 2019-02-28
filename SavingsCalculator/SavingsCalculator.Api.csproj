@@ -9,13 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
     <Folder Include="Data\" />
     <Folder Include="Data\Entities\" />
     <Folder Include="Data\Migrations\" />
     <Folder Include="Controllers\" />
     <Folder Include="Data\ViewModels\" />
-    <Folder Include="Business\" />
   </ItemGroup>
 
   <ItemGroup>

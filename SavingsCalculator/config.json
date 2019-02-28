@@ -1,6 +1,6 @@
 {
   "ConnectionStrings": {
-    "BovsiLinkedinConnectionString": "Data Source=(local);Initial Catalog=SavingsCalculator;Integrated Security=True"
+    "DefaultConnectionString": "Data Source=(local);Initial Catalog=SavingsCalculator;Integrated Security=True"
   },
   "Tokens": {
     "Key": "mys3cre7",
