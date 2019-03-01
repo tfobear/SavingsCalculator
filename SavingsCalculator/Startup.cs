@@ -15,6 +15,7 @@ using SavingsCalculator.Api.Data;
 using SavingsCalculator.Data;
 using SavingsCalculator.Data.Entities;
 using Swashbuckle.AspNetCore.Swagger;
+using VueCliMiddleware;
 
 namespace SavingsCalculator.Api
 {
@@ -93,6 +94,11 @@ namespace SavingsCalculator.Api
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Tokens:Key"]))
                     };
                 });
+
+            services.AddSpaStaticFiles(config =>
+            {
+                config.RootPath = "/ClientApp/dist/";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -109,12 +115,24 @@ namespace SavingsCalculator.Api
 
             app.UseHttpsRedirection();
             app.UseMvc();
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Savings Calculator API V1");
             });
 
+            app.UseSpaStaticFiles();
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "ClientApp";
+#if DEBUG
+                if (env.IsDevelopment())
+                {
+                    spa.UseVueCli(npmScript: "dev", port: 8080); // optional port
+                }
+#endif
+            });
         }
     }
 }

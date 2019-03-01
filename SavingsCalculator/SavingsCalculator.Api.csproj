@@ -13,16 +13,63 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <Content Include="ClientApp\.babelrc" />
+    <Content Include="ClientApp\.editorconfig" />
+    <Content Include="ClientApp\.eslintignore" />
+    <Content Include="ClientApp\.eslintrc.js" />
+    <Content Include="ClientApp\.gitignore" />
+    <Content Include="ClientApp\.postcssrc.js" />
+    <Content Include="ClientApp\build\build.js" />
+    <Content Include="ClientApp\build\check-versions.js" />
+    <Content Include="ClientApp\build\dev-client.js" />
+    <Content Include="ClientApp\build\dev-server.js" />
+    <Content Include="ClientApp\build\load-minified.js" />
+    <Content Include="ClientApp\build\service-worker-dev.js" />
+    <Content Include="ClientApp\build\service-worker-prod.js" />
+    <Content Include="ClientApp\build\utils.js" />
+    <Content Include="ClientApp\build\vue-loader.conf.js" />
+    <Content Include="ClientApp\build\webpack.base.conf.js" />
+    <Content Include="ClientApp\build\webpack.dev.conf.js" />
+    <Content Include="ClientApp\build\webpack.prod.conf.js" />
+    <Content Include="ClientApp\config\dev.env.js" />
+    <Content Include="ClientApp\config\index.js" />
+    <Content Include="ClientApp\config\prod.env.js" />
+    <Content Include="ClientApp\index.html" />
+    <Content Include="ClientApp\README.md" />
+    <Content Include="ClientApp\src\App.vue" />
+    <Content Include="ClientApp\src\assets\logo.png" />
+    <Content Include="ClientApp\src\components\Hello.vue" />
+    <Content Include="ClientApp\src\main.js" />
+    <Content Include="ClientApp\src\router\index.js" />
+    <Content Include="ClientApp\static\img\icons\android-chrome-192x192.png" />
+    <Content Include="ClientApp\static\img\icons\android-chrome-512x512.png" />
+    <Content Include="ClientApp\static\img\icons\apple-touch-icon-120x120.png" />
+    <Content Include="ClientApp\static\img\icons\apple-touch-icon-152x152.png" />
+    <Content Include="ClientApp\static\img\icons\apple-touch-icon-180x180.png" />
+    <Content Include="ClientApp\static\img\icons\apple-touch-icon-60x60.png" />
+    <Content Include="ClientApp\static\img\icons\apple-touch-icon-76x76.png" />
+    <Content Include="ClientApp\static\img\icons\apple-touch-icon.png" />
+    <Content Include="ClientApp\static\img\icons\favicon-16x16.png" />
+    <Content Include="ClientApp\static\img\icons\favicon-32x32.png" />
+    <Content Include="ClientApp\static\img\icons\favicon.ico" />
+    <Content Include="ClientApp\static\img\icons\msapplication-icon-144x144.png" />
+    <Content Include="ClientApp\static\img\icons\mstile-150x150.png" />
+    <Content Include="ClientApp\static\img\icons\safari-pinned-tab.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="Data\Entities\" />
     <Folder Include="Data\Migrations\" />
     <Folder Include="Controllers\" />
     <Folder Include="Data\ViewModels\" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />
+    <PackageReference Include="VueCliMiddleware" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>

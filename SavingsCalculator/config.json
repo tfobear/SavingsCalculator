@@ -3,7 +3,7 @@
     "DefaultConnectionString": "Data Source=(local);Initial Catalog=SavingsCalculator;Integrated Security=True"
   },
   "Tokens": {
-    "Key": "mys3cre7",
+    "Key": "savingscalculatorsecretthatsnotsosecret123",
     "Issuer": "SavingsCalculator",
     "Audience": "SvaingsCalculator"
   },
