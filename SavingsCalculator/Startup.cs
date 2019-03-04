@@ -97,7 +97,7 @@ namespace SavingsCalculator.Api
 
             services.AddSpaStaticFiles(config =>
             {
-                config.RootPath = "/ClientApp/dist/";
+                config.RootPath = "ClientApp/dist/";
             });
         }
 
@@ -125,8 +125,9 @@ namespace SavingsCalculator.Api
             app.UseSpaStaticFiles();
             app.UseSpa(spa =>
             {
-                spa.Options.SourcePath = "ClientApp";
 #if DEBUG
+                spa.Options.SourcePath = "ClientApp";
+
                 if (env.IsDevelopment())
                 {
                     spa.UseVueCli(npmScript: "dev", port: 8080); // optional port
