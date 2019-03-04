@@ -4,6 +4,14 @@ import axios from 'axios'
 
 Vue.use(Vuex)
 
+function onAuthSuccess (resp, commit) {
+  const token = resp.data.token
+  const user = resp.data.user
+  localStorage.setItem('token', token)
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+  commit('auth_success', token, user)
+}
+
 export default new Vuex.Store({
   state: {
     status: '',
@@ -33,11 +41,7 @@ export default new Vuex.Store({
         commit('auth_request')
         axios({ url: '/api/accounts/createtoken', data: user, method: 'POST' })
           .then(resp => {
-            const token = resp.data.token
-            const user = resp.data.user
-            localStorage.setItem('token', token)
-            axios.defaults.headers.common['Authorization'] = token
-            commit('auth_success', token, user)
+            onAuthSuccess(resp, commit)
             resolve(resp)
           })
           .catch(err => {
@@ -50,13 +54,9 @@ export default new Vuex.Store({
     register ({ commit }, user) {
       return new Promise((resolve, reject) => {
         commit('auth_request')
-        axios({ url: 'http://localhost:3000/register', data: user, method: 'POST' })
+        axios({ url: '/api/accounts/register', data: user, method: 'POST' })
           .then(resp => {
-            const token = resp.data.token
-            const user = resp.data.user
-            localStorage.setItem('token', token)
-            axios.defaults.headers.common['Authorization'] = token
-            commit('auth_success', token, user)
+            onAuthSuccess(resp, commit)
             resolve(resp)
           })
           .catch(err => {

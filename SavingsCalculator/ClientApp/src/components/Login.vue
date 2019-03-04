@@ -21,7 +21,7 @@
       </div>
 
       <div class='actions md-layout md-alignment-center-space-between'>
-        <a href='/resetpassword'>Reset password</a>
+        <span>Not a user? <router-link to="../register">Sign Up</router-link></span>
         <md-button class='md-raised md-primary' @click='auth'>Log in</md-button>
       </div>
 
@@ -50,10 +50,8 @@ export default {
     auth () {
       // TODO:
       this.loading = true
-      let email = this.login.email
-      let password = this.login.password
-      console.log({ email, password })
-      this.$store.dispatch('login', { email, password })
+
+      this.$store.dispatch('login', { ...this.login })
         .then(() => this.$router.push('/'))
         .catch(err => console.log(err))
         .finally(() => (this.loading = false))
