@@ -5,7 +5,7 @@
   "Tokens": {
     "Key": "savingscalculatorsecretthatsnotsosecret123",
     "Issuer": "SavingsCalculator",
-    "Audience": "SvaingsCalculator"
+    "Audience": "SavingsCalculator"
   },
   "Seed": {
     "DefaultPassword": "savingsp@ss"

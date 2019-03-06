@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using SavingsCalculator.Api.Business;
+using SavingsCalculator.Api.Core;
 using SavingsCalculator.Api.Data;
 using SavingsCalculator.Data;
 using SavingsCalculator.Data.Entities;
@@ -83,17 +86,24 @@ namespace SavingsCalculator.Api
             .AddEntityFrameworkStores<SavingsContext>();
 
             services.AddTransient<AppSeeder>();
+            services.AddScoped<IAccountsService, AccountsService>();
+            services.AddScoped<ISavingsGoalsService, SavingsGoalsService>();
 
-            services.AddAuthentication()
-                .AddJwtBearer(cfg =>
-                {
-                    cfg.TokenValidationParameters = new TokenValidationParameters()
+            services.AddAuthentication(
+                    cfg =>
                     {
-                        ValidIssuer = config["Tokens:Issuer"],
-                        ValidAudience = config["Tokens:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Tokens:Key"]))
-                    };
-                });
+                        cfg.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    })
+                .AddJwtBearer(
+                    cfg =>
+                    {
+                        cfg.TokenValidationParameters = new TokenValidationParameters()
+                        {
+                            ValidIssuer = config["Tokens:Issuer"],
+                            ValidAudience = config["Tokens:Audience"],
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Tokens:Key"]))
+                        };
+                    });
 
             services.AddSpaStaticFiles(config =>
             {
