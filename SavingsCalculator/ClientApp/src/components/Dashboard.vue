@@ -10,8 +10,10 @@
     </div>
     <div v-for="goal in goals" v-else :key="goal.id">
       <savings-goal-card class="goal-card"
-        :id="goal.id" :name="goal.name" :currentAmount="goal.currentAmount" :targetAmount="goal.targetAmount"
-        @delete-goal="deleteGoal" />
+        :id="goal.id" :name="goal.name" :current-amount="goal.currentAmount" :target-amount="goal.targetAmount"
+        :save-goal-result="saveGoalResult"
+        @delete-goal="deleteGoal"
+        @save-goal="saveGoal" />
     </div>
     <md-button class="add-button md-fab md-primary" @click="showAddGoalDialog = true" v-if="goals && goals.length > 0">
       <md-icon>add</md-icon>
@@ -28,15 +30,15 @@
         </md-field>
 
         <md-field>
-          <md-icon>attach_money</md-icon>
           <label>Target Amount</label>
+          <span class="md-prefix">$</span>
           <md-input type="number" step="0.01" v-model='newGoal.targetAmount'></md-input>
           <span class="md-error" v-if="newGoalErrors.targetAmountRequired">Target Amount is required</span>
         </md-field>
 
         <md-field>
-          <md-icon>attach_money</md-icon>
           <label>Current Amount</label>
+          <span class="md-prefix">$</span>
           <md-input type="number" step="0.01" v-model='newGoal.currentAmount'></md-input>
           <span class="md-error" v-if="newGoalErrors.currentAmountRequired">Current Amount is required</span>
         </md-field>
@@ -46,13 +48,13 @@
 
       <md-dialog-actions>
         <md-button class="md-primary" @click="showAddGoalDialog = false">Close</md-button>
-        <md-button class="md-primary" @click="saveGoal">Save</md-button>
+        <md-button class="md-primary" @click="addGoal">Save</md-button>
       </md-dialog-actions>
 
-      <md-snackbar md-position="center" md-duration="4000" :md-active.sync="showDeletedSnackbar" md-persistent>
+      <md-snackbar md-position="center" :md-duration="4000" :md-active.sync="showDeletedSnackbar" md-persistent>
         <span>Goal Deleted!</span>
       </md-snackbar>
-      <md-snackbar md-position="center" md-duration="4000" :md-active.sync="showSomethingWrongSnackbar" md-persistent>
+      <md-snackbar md-position="center" :md-duration="4000" :md-active.sync="showServerErrorSnackbar" md-persistent>
         <span>Something went wrong! Please try again or call support.</span>
       </md-snackbar>
     </md-dialog>
@@ -94,11 +96,12 @@ export default {
       goals: [],
       showAddGoalDialog: false,
       showDeletedSnackbar: false,
-      showSomethingWrongSnackbar: false,
+      showServerErrorSnackbar: false,
+      saveGoalResult: 'none',
       newGoal: {
         name: '',
-        currentAmount: null,
-        targetAmount: null
+        currentAmount: 0.0,
+        targetAmount: 0.0
       },
       newGoalErrors: {
         nameRequired: false,
@@ -114,20 +117,42 @@ export default {
         this.goals = result
       })
     },
-    saveGoal () {
+    addGoal () {
       goalsService.addSavingsGoal(this.newGoal)
         .then(result => {
           this.addSavingsGoalServerError = false
 
           this.newGoal.name = ''
-          this.newGoal.currentAmount = null
-          this.newGoal.targetAmount = null
+          this.newGoal.currentAmount = 0.0
+          this.newGoal.targetAmount = 0.0
 
           this.goals.push(result)
           this.showAddGoalDialog = false
         })
         .catch(() => {
           this.addSavingsGoalServerError = true
+        })
+    },
+    saveGoal (goalId, goal) {
+      goalsService.updateSavingsGoal(goalId, goal)
+        .then(result => {
+          this.showServerErrorSnackbar = false
+
+          this.goals = this.goals.map(goal => {
+            if (goal.id === goalId) {
+              goal.name = result.name
+              goal.currentAmount = result.currentAmount
+              goal.targetAmount = result.targetAmount
+            }
+
+            return goal
+          })
+
+          this.saveGoalResult = 'success'
+        })
+        .catch(() => {
+          this.showServerErrorSnackbar = true
+          this.saveGoalResult = 'failure'
         })
     },
     deleteGoal (goalId) {
@@ -146,7 +171,7 @@ export default {
 
 <style lang='scss'>
 .add-button {
-  position: fixed;
+  position: fixed !important;
   top: calc(100% - 100px);
   right: 50px;
 }

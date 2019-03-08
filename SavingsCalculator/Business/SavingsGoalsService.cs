@@ -33,7 +33,7 @@ namespace SavingsCalculator.Api.Business
             return await goals.ToListAsync();
         }
 
-        public async Task<SavingsGoal> AddSavingsGoal(string name, decimal currentAmount, decimal targetAmount, Guid userId)
+        public async Task<SavingsGoal> AddSavingsGoal(Guid userId, string name, decimal currentAmount, decimal targetAmount)
         {
             var dataGoal = new Data.Entities.SavingsGoal()
             {
@@ -45,16 +45,50 @@ namespace SavingsCalculator.Api.Business
 
             // TODO: should wrap in own repository
             Context.SavingsGoals.Add(dataGoal);
-            await Context.SaveChangesAsync();
+            var count = await Context.SaveChangesAsync();
 
-            return new SavingsGoal
+            if (count > 0)
             {
-                Id = dataGoal.Id,
-                UserId = dataGoal.UserId,
-                Name = dataGoal.Name,
-                CurrentAmount = dataGoal.CurrentAmount,
-                TargetAmount = dataGoal.TargetAmount
-            };
+                return new SavingsGoal
+                {
+                    Id = dataGoal.Id,
+                    UserId = dataGoal.UserId,
+                    Name = dataGoal.Name,
+                    CurrentAmount = dataGoal.CurrentAmount,
+                    TargetAmount = dataGoal.TargetAmount
+                };
+            }
+
+            return null;
+        }
+
+        public async Task<SavingsGoal> UpdateSavingsGoal(Guid goalId, Guid userId, string name, decimal currentAmount, decimal targetAmount)
+        {
+            var dataGoal = await Context.SavingsGoals.FindAsync(goalId);
+
+            if (dataGoal != null)
+            {
+                dataGoal.Name = name;
+                dataGoal.CurrentAmount = currentAmount;
+                dataGoal.TargetAmount = targetAmount;
+
+                Context.SavingsGoals.Update(dataGoal);
+                var count = await Context.SaveChangesAsync();
+
+                if (count > 0)
+                {
+                    return new SavingsGoal
+                    {
+                        Id = dataGoal.Id,
+                        UserId = dataGoal.UserId,
+                        Name = dataGoal.Name,
+                        CurrentAmount = dataGoal.CurrentAmount,
+                        TargetAmount = dataGoal.TargetAmount
+                    };
+                }
+            }
+
+            return null;
         }
 
         public async Task<bool> DeleteSavingsGoal(Guid goalId)

@@ -23,6 +23,17 @@ const goalsService = {
         })
     })
   },
+  updateSavingsGoal (goalId, goal) {
+    return new Promise((resolve, reject) => {
+      axios.put(`/api/savings?goalId=${goalId}`, goal)
+        .then(res => {
+          resolve(res.data)
+        })
+        .catch(reason => {
+          reject(reason)
+        })
+    })
+  },
   deleteGoal (goalId) {
     return new Promise((resolve, reject) => {
       axios.delete(`/api/savings?goalId=${goalId}`)

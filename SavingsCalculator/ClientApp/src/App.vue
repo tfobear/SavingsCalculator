@@ -3,11 +3,14 @@
     <header class="app-header" v-if="isLoggedIn">
       <md-toolbar class="md-primary">
         <div class="md-toolbar-section-start">
-          <h1 class="md-title">Savings Calculator</h1>
+          <h1 class="md-title"> 💰 Savings Calculator </h1>
         </div>
 
         <div class="md-toolbar-section-end">
-          <div class="logout-button" @click="logout">Logout</div>
+          <span>Logout</span>
+          <md-button @click="logout" class="md-icon-button">
+            <md-icon>exit_to_app</md-icon>
+          </md-button>
         </div>
       </md-toolbar>
     </header>

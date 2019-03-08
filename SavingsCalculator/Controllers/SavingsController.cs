@@ -36,9 +36,29 @@ namespace SavingsCalculator.Api.Controllers
         public async Task<IActionResult> AddSavingsGoal(SavingsGoalViewModel goal)
         {
             var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            var added = await _savingsGoalService.AddSavingsGoal(goal.Name, goal.CurrentAmount, goal.TargetAmount, userId);
+            var added = await _savingsGoalService.AddSavingsGoal(userId, goal.Name, goal.CurrentAmount, goal.TargetAmount);
 
-            return Ok(added);
+            if (added != null)
+            {
+                return Ok(added);
+            }
+
+            return StatusCode(500, "Nothing was added.");
+        }
+
+        [HttpPut]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> UpdateSavingsGoal(Guid goalId, [FromBody] SavingsGoalViewModel goal)
+        {
+            var userId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var updated = await _savingsGoalService.UpdateSavingsGoal(goalId, userId, goal.Name, goal.CurrentAmount, goal.TargetAmount);
+
+            if (updated != null)
+            {
+                return Ok(updated);
+            }
+
+            return StatusCode(500, "Nothing was updated.");
         }
 
         [HttpDelete]
@@ -46,14 +66,14 @@ namespace SavingsCalculator.Api.Controllers
         public async Task<IActionResult> DeleteSavingsGoal(Guid goalId)
         {
             //TODO: ensure this user is deleting it?
-            var added = await _savingsGoalService.DeleteSavingsGoal(goalId);
+            var deleted = await _savingsGoalService.DeleteSavingsGoal(goalId);
 
-            if (added)
+            if (deleted)
             {
                 return Ok();
             }
 
-            return StatusCode(500, "Nothing was deleted");
+            return StatusCode(500, "Nothing was deleted.");
         }
     }
 }
