@@ -12,11 +12,13 @@
         <md-field>
           <label>E-mail</label>
           <md-input v-model='login.email' autofocus></md-input>
+          <span class="md-error">E-mail is required</span>
         </md-field>
 
         <md-field md-has-password>
           <label>Password</label>
           <md-input v-model='login.password' type='password'></md-input>
+          <span class="md-error">Password is required</span>
         </md-field>
       </div>
 
@@ -48,7 +50,6 @@ export default {
   },
   methods: {
     auth () {
-      // TODO:
       this.loading = true
 
       this.$store.dispatch('login', { ...this.login })

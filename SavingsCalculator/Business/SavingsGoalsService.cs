@@ -32,5 +32,41 @@ namespace SavingsCalculator.Api.Business
 
             return await goals.ToListAsync();
         }
+
+        public async Task<SavingsGoal> AddSavingsGoal(string name, decimal currentAmount, decimal targetAmount, Guid userId)
+        {
+            var dataGoal = new Data.Entities.SavingsGoal()
+            {
+                Name = name,
+                CurrentAmount = currentAmount,
+                TargetAmount = targetAmount,
+                UserId = userId
+            };
+
+            // TODO: should wrap in own repository
+            Context.SavingsGoals.Add(dataGoal);
+            await Context.SaveChangesAsync();
+
+            return new SavingsGoal
+            {
+                Id = dataGoal.Id,
+                UserId = dataGoal.UserId,
+                Name = dataGoal.Name,
+                CurrentAmount = dataGoal.CurrentAmount,
+                TargetAmount = dataGoal.TargetAmount
+            };
+        }
+
+        public async Task<bool> DeleteSavingsGoal(Guid goalId)
+        {
+            Data.Entities.SavingsGoal goal = new Data.Entities.SavingsGoal() {Id = goalId};
+
+            Context.SavingsGoals.Attach(goal);
+            Context.SavingsGoals.Remove(goal);
+
+            var count = await Context.SaveChangesAsync();
+
+            return count > 0;
+        }
     }
 }
