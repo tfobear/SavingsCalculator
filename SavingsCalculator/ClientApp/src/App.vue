@@ -1,13 +1,13 @@
 <template>
   <div>
-    <header v-if="isLoggedIn">
+    <header class="app-header" v-if="isLoggedIn">
       <md-toolbar class="md-primary">
         <div class="md-toolbar-section-start">
-          <h1 class="md-title">Vue Material</h1>
+          <h1 class="md-title">Savings Calculator</h1>
         </div>
 
         <div class="md-toolbar-section-end">
-          <a @click="logout">Logout</a>
+          <div class="logout-button" @click="logout">Logout</div>
         </div>
       </md-toolbar>
     </header>
@@ -44,5 +44,13 @@ body {
 
 .content {
   min-height: 100%;
+}
+
+.app-header {
+  margin-bottom: 60px;
+}
+
+.logout-button {
+  cursor: pointer;
 }
 </style>

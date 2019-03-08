@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace SavingsCalculator.Api.Data.ViewModels
+﻿namespace SavingsCalculator.Api.Data.ViewModels
 {
     public class RegisterViewModel
     {
