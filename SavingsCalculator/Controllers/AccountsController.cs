@@ -57,12 +57,14 @@ namespace SavingsCalculator.Controllers
             {
                 if (register.Password == register.ConfirmPassword)
                 {
-                    var newUser = new AppUser();
+                    var newUser = new AppUser
+                    {
+                        FirstName = register.FirstName,
+                        LastName = register.LastName,
+                        Email = register.Email,
+                        UserName = register.Email
+                    };
 
-                    newUser.FirstName = register.FirstName;
-                    newUser.LastName = register.LastName;
-                    newUser.Email = register.Email;
-                    newUser.UserName = register.Email;
 
                     var result = await userManager.CreateAsync(newUser, register.Password);
 
@@ -90,6 +92,7 @@ namespace SavingsCalculator.Controllers
             return true;
         }
 
+        // checks password and creates the token
         private async Task<IActionResult> Login(string email, string password)
         {
             var user = await userManager.FindByEmailAsync(email);

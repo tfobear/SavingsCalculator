@@ -19,6 +19,13 @@ Vue.use(Vuex)
 
 Vue.config.productionTip = false
 
+Vue.prototype.$http = Axios
+const token = localStorage.getItem('token')
+
+if (token) {
+  Vue.prototype.$http.defaults.headers.common['Authorization'] = `Bearer ${token}`
+}
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
@@ -27,10 +34,3 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
-
-Vue.prototype.$http = Axios
-const token = localStorage.getItem('token')
-
-if (token) {
-  Vue.prototype.$http.defaults.headers.common['Authorization'] = token
-}

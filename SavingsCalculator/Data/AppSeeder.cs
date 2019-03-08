@@ -8,7 +8,9 @@ using SavingsCalculator.Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
+using SavingsCalculator.Api.Data.Entities;
 
 namespace SavingsCalculator.Api.Data
 {
@@ -55,6 +57,29 @@ namespace SavingsCalculator.Api.Data
                     {
                         throw new InvalidOperationException("Couldn't create new user in AppSeeder");
                     }
+                }
+
+                if (context.SavingsGoals.Count(g => g.UserId == found.Id) == 0)
+                {
+                    found = await userManager.FindByEmailAsync(user.Email);
+
+                    context.SavingsGoals.Add(new SavingsGoal()
+                    {
+                        Name = "Streaming Gear",
+                        CurrentAmount = 150.00m,
+                        TargetAmount = 1500.00m,
+                        UserId = found.Id
+                    });
+
+                    context.SavingsGoals.Add(new SavingsGoal()
+                    {
+                        Name = "Retirement",
+                        CurrentAmount = 20000.00m,
+                        TargetAmount = 500000.00m,
+                        UserId = found.Id
+                    });
+
+                    await context.SaveChangesAsync();
                 }
             }
         }
